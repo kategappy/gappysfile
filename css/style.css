@@ -94,8 +94,18 @@ img { display: block; width: 100%; height: auto; }
 main { padding-top: 60px; }
 
 /* ---------- головна: hero ---------- */
-.hero { padding-top: 60px; padding-bottom: 140px; align-items: center; }
-.hero .creature { grid-column: 3; }
+.hero { padding-top: 260px; padding-bottom: 260px; align-items: center; }
+.hero .creature { grid-column: 3; position: relative; margin: 0; }
+.hero .creature img { display: block; }
+/* ховер на грифона: рамка виділення, як у Figma, і підпис під ним */
+.hero .creature .selection { inset: -6px; opacity: 0; transition: opacity .15s; }
+.hero .creature figcaption {
+  position: absolute; top: calc(100% + 16px); left: 0; right: 0;
+  font-size: 13px; line-height: 1.45; color: var(--muted);
+  opacity: 0; transform: translateY(-4px); transition: opacity .2s, transform .2s;
+}
+.hero .creature:hover .selection,
+.hero .creature:hover figcaption { opacity: 1; transform: none; }
 .hero .intro {
   grid-column: 4;
   font-family: var(--serif);
