@@ -26,8 +26,9 @@ window.PROJECTS = [
     description: "My own initiative: a chess club with vinyl music and drinks, every Wednesday. A passion project I came up with, branded, organised and hosted myself.",
     items: [
       { file: "01.webp", h: 136 },
-      { file: "02.mp4", h: 112 },
-      { file: "03.webp", h: 350 },
+      { file: "02.webp", h: 112 },
+      { file: "03.webp", h: 112 },
+      { file: "04.webp", h: 350 },
     ],
   },
   {
