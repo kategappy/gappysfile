@@ -16,6 +16,7 @@
   --line: #ececec;          /* вертикальні лінії сітки */
   --accent: #0d99ff;        /* синій «як у Figma» — колір виділення */
   --placeholder: #f3f3f3;
+  --btn-border: #d6d6d6;
 
   --margin: 20px;           /* поля сторінки */
   --gap: 10px;              /* відстань між колонками */
@@ -90,7 +91,7 @@ img { display: block; width: 100%; height: auto; }
 .clock {
   position: fixed; top: 20px; right: var(--margin);
   z-index: 21;
-  background: var(--ink); color: #fff;
+  background: #111; color: #fff;
   padding: 4px 10px; font-size: 12px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -199,11 +200,11 @@ main { padding-top: 60px; }
 .project .info .desc { font-size: 13px; max-width: 420px; padding-top: 18px; }
 .btn {
   display: inline-block; align-self: flex-start;
-  border: 1px solid #d6d6d6; background: #fff;
+  border: 1px solid var(--btn-border); background: transparent;
   padding: 7px 13px; font-size: 12px;
 }
 .btn:hover { border-color: var(--accent); color: var(--accent); }
-.btn.is-off, .btn.is-off:hover { color: var(--muted); border-color: #e4e4e4; cursor: default; }
+.btn.is-off, .btn.is-off:hover { color: var(--muted); border-color: var(--btn-border); opacity: .7; cursor: default; }
 .project .gallery {
   grid-column: 3 / span 4;
   display: flex; flex-direction: column; gap: 10px;
@@ -321,4 +322,13 @@ main { padding-top: 60px; }
 /* телефон: шрифт із засічками трохи щільніший, щоб не здавався блідим */
 @media (max-width: 900px) {
   .hero .intro, .about-stage .note dd { font-weight: 350; }
+}
+
+/* темна сторінка проєкту (колір задається полем bg у projects.js) */
+body.theme-dark {
+  --ink: #f2f2f2;
+  --muted: #8f8f8f;
+  --line: #343434;
+  --placeholder: #2c2c2c;
+  --btn-border: #555;
 }

@@ -12,7 +12,7 @@ Owner: Gappy (Kateryna Hapiienko). Talk to her in Ukrainian; she is a designer, 
 - Favicon: favicon.svg (griffin) + favicon-32.png + apple-touch-icon.png. Open Graph: og.png (1200×630); og:image uses the absolute URL https://kategappy.github.io/gappysfile/og.png — update it in all 4 HTML files if the domain changes.
 - "Where: O0" is rendered as a link to https://www.ozero.design/ (STUDIOS map in main.js)
 - `css/style.css` — tokens in `:root`: white bg, light grid lines, accent #0d99ff (Figma selection blue — the site imitates a Figma file), 6 cols, 10px gap, 120px row gap
-- `js/projects.js` — project list; the only file to edit when adding work
+- `js/projects.js` — project list; the only file to edit when adding work. Optional `bg: "#222222"` gives that project page a dark theme (body.theme-dark)
 - CSS/JS are linked with `?v=N` in all HTML files — bump N on every CSS/JS change so browsers don’t show a stale cached version
 - `js/main.js` — header/clock/footer, grid from data, project hover (blue outline per row with corner handles, gaps inside the frame keep the hover), "See project" tag follows the cursor, project + about pages
 

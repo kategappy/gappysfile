@@ -245,6 +245,11 @@
     const p = PROJECTS[i];
     if (!p) return;
     document.title = `${p.title} — Gappy’s File`;
+    // свій колір фону для проєкту (поле bg у projects.js), напр. "#222222"
+    if (p.bg) {
+      document.body.style.setProperty("--bg", p.bg);
+      document.body.classList.add("theme-dark");
+    }
 
     const info = document.querySelector(".info");
     info.innerHTML = `

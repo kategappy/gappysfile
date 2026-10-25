@@ -10,6 +10,7 @@
    - items — файли по ТВОЇЙ нумерації (01, 02, 03…)
        file — назва файлу (.webp .jpg .png .gif .mp4 .webm)
        h    — висота плитки при ширині 225 (пропорція файлу)
+   - bg — свій колір фону сторінки проєкту (темний), напр. "#222222"
    - skipAfter — скільки порожніх клітинок лишити після проєкту
    - services / where / description / live — для сторінки проєкту
        live: посилання (https://…) → клікабельна кнопка «Live website»;
@@ -105,6 +106,7 @@ window.PROJECTS = [
   },
   {
     slug: "open-note",
+    bg: "#222222",
     title: "open note",
     services: "Web Design, Illustration",
     where: "O0",
