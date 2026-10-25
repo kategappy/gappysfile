@@ -26,7 +26,11 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
+/* чорне тло видно лише коли «тягнеш» сторінку за край (overscroll) */
+html { -webkit-text-size-adjust: 100%; background: #111; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* «Projects» у меню прокручує до робіт; запас зверху, щоб підпис проєкту не ховався під меню */
+#work { scroll-margin-top: 110px; }
 body {
   background: var(--bg);
   color: var(--ink);

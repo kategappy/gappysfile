@@ -23,7 +23,7 @@
     header.className = "row header";
     header.innerHTML = `
       <a class="brand" href="index.html">Gappy’s File</a>
-      <a class="nav-projects" href="index.html" ${page === "home" || page === "project" ? 'aria-current="page"' : ""}>Projects</a>
+      <a class="nav-projects" href="index.html#work" ${page === "home" || page === "project" ? 'aria-current="page"' : ""}>Projects</a>
       <a class="nav-about" href="about.html" ${page === "about" ? 'aria-current="page"' : ""}>About</a>
       <a class="nav-contact" href="contact.html" ${page === "contact" ? 'aria-current="page"' : ""}>Contact</a>`;
     document.body.prepend(header);
