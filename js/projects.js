@@ -38,7 +38,6 @@ window.PROJECTS = [
     where: "",
     description: "",
     live: "",
-    skipAfter: 1,
     items: [
       { file: "01.webp", h: 136 },
       { file: "02.webp", h: 224 },
