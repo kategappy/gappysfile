@@ -17,7 +17,7 @@ Owner: Gappy (Kateryna Hapiienko). Talk to her in Ukrainian; she is a designer, 
 
 ## Rules for media (agreed with Gappy)
 - Tile ORDER = Gappy’s own file numbering (`01.webp`, `02.mp4`…), NOT the Figma order.
-- Convert: images → `NN.webp` 800px wide, quality 82; videos → `NN.mp4` H.264, 800px wide, crf 26, no audio, +faststart. Her screen recordings often have non-square pixels (SAR ≠ 1:1): always normalise with `scale=trunc(iw*sar/2)*2:ih,setsar=1,scale=800:-2`.
+- Convert (quality matters to Gappy — don't over-compress): images → `NN.webp` up to 1600px wide (never upscale), quality 90; videos → `NN.mp4` 800px wide crf 23 for the grid (crf 28 if it gets >2.5 MB) + `NN.hd.mp4` up to 1600px crf 22 for the project page (main.js falls back to NN.mp4 if no hd file). H.264, no audio, +faststart. Her screen recordings often have non-square pixels (SAR ≠ 1:1): always normalise with `scale=trunc(iw*sar/2)*2:ih,setsar=1,scale=800:-2`.
 - `h` in projects.js = real height at 225px width (placeholder only — on load each tile takes the file’s natural proportions, nothing is cropped).
 - Never commit originals (PNGs).
 - Mobile: 2 columns.

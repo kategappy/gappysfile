@@ -73,6 +73,8 @@
     el.addEventListener("load", () => fit(el.naturalWidth, el.naturalHeight));
     el.addEventListener("loadedmetadata", () => fit(el.videoWidth, el.videoHeight));
     el.addEventListener("error", () => {
+      // HD-версії відео нема — беремо звичайну
+      if (el.dataset.fallback) { const f = el.dataset.fallback; delete el.dataset.fallback; el.src = f; return; }
       el.remove();
       box.insertAdjacentHTML("beforeend", `<span class="missing">${src.split("/").slice(-2).join("/")}</span>`);
     });
@@ -257,7 +259,11 @@
     p.items.forEach(({ file, h }, n) => {
       const wrap = document.createElement("div");
       wrap.className = "shot";
-      wrap.append(media(`assets/projects/${p.slug}/${file}`, h, `${p.title} — ${n + 1}`, true));
+      const m = media(`assets/projects/${p.slug}/${file}`, h, `${p.title} — ${n + 1}`, true);
+      // на сторінці проєкту відео у високій якості (NN.hd.mp4), якщо є
+      const v = m.querySelector("video");
+      if (v) { v.dataset.fallback = v.src; v.src = v.src.replace(/\.mp4$/, ".hd.mp4"); }
+      wrap.append(m);
       gallery.append(wrap);
     });
 

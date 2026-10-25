@@ -110,6 +110,7 @@ main { padding-top: 60px; }
   grid-column: 4;
   font-family: var(--serif);
   font-weight: 300;
+  font-optical-sizing: auto;
   font-size: 22px; line-height: 1.12;
 }
 
