@@ -1,6 +1,6 @@
 # Gappy’s File — portfolio site
 
-Static site (plain HTML/CSS/JS, no build step), hosted on GitHub Pages from `main` / root.
+Static site (plain HTML/CSS/JS, no build step), hosted on GitHub Pages from `main` / root. Repo: kategappy/gappysfile (renamed from portfolio) → https://kategappy.github.io/gappysfile/
 Owner: Gappy (Kateryna Hapiienko). Talk to her in Ukrainian; she is a designer, beginner in web.
 
 ## Structure
