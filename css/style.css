@@ -177,6 +177,7 @@ main { padding-top: 60px; }
   padding: 7px 13px; font-size: 12px;
 }
 .btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.is-off, .btn.is-off:hover { color: var(--muted); border-color: #e4e4e4; cursor: default; }
 .project .gallery {
   grid-column: 3 / span 4;
   display: flex; flex-direction: column; gap: 10px;

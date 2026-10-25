@@ -12,6 +12,8 @@
        h    — висота плитки при ширині 225 (пропорція файлу)
    - skipAfter — скільки порожніх клітинок лишити після проєкту
    - services / where / description / live — для сторінки проєкту
+       live: посилання (https://…) → клікабельна кнопка «Live website»;
+             будь-який інший текст → сіра неклікабельна плашка з цим текстом
    ========================================================= */
 
 window.PROJECTS = [
@@ -20,7 +22,7 @@ window.PROJECTS = [
     title: "finic ai",
     services: "Web Design, Brand",
     where: "O0",
-    live: "",
+    live: "already dead",
     description: "",
     items: [
       { file: "01.mp4", h: 120 },
@@ -64,7 +66,7 @@ window.PROJECTS = [
     title: "payman",
     services: "Web Design, Brand",
     where: "O0",
-    live: "",
+    live: "already died",
     description: "",
     items: [
       { file: "01.webp", h: 141 },

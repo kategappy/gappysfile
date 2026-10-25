@@ -58,8 +58,7 @@
     let el;
     if (VIDEO.test(src)) {
       el = document.createElement("video");
-      // на головній відео стоїть на першому кадрі й оживає при ховері
-      Object.assign(el, { autoplay: !!autoplay, muted: true, loop: true, playsInline: true, preload: "auto" });
+      Object.assign(el, { autoplay: true, muted: true, loop: true, playsInline: true, preload: "auto" });
       el.setAttribute("muted", "");
       el.setAttribute("playsinline", "");
     } else {
@@ -77,7 +76,7 @@
       el.remove();
       box.insertAdjacentHTML("beforeend", `<span class="missing">${src.split("/").slice(-2).join("/")}</span>`);
     });
-    el.src = VIDEO.test(src) && !autoplay ? src + "#t=0.001" : src; // #t — щоб показати перший кадр
+    el.src = src;
     box.append(el);
     return box;
   }
@@ -137,13 +136,6 @@
 
     revealOnScroll([...grid.querySelectorAll(".tile")]);
 
-    // на телефоні ховеру немає — там відео грають, коли видно на екрані
-    if (matchMedia("(hover: none)").matches && "IntersectionObserver" in window) {
-      const vio = new IntersectionObserver((entries) =>
-        entries.forEach((e) => (e.isIntersecting ? playVideos([e.target]) : pauseVideos([e.target]))), { threshold: 0.4 });
-      grid.querySelectorAll(".tile").forEach((t) => t.querySelector("video") && vio.observe(t));
-    }
-
     /* Ховер: наводиш на одну картинку — виділяється весь проєкт.
        Рамка малюється навколо кожного рядка, який займає проєкт. */
     const tag = document.querySelector(".cursor-tag");
@@ -153,7 +145,7 @@
     function clearSelection() {
       boxes.forEach((b) => b.remove());
       boxes = [];
-      pauseVideos([...grid.querySelectorAll(".tile.is-active")]); // відео завмирають
+      playVideos([...grid.querySelectorAll(".tile.is-active")]); // відводиш курсор — відео знову грають
       grid.classList.remove("is-hovering");
       grid.querySelectorAll(".tile.is-active").forEach((t) => t.classList.remove("is-active"));
     }
@@ -164,7 +156,7 @@
       if (!tiles) return;
       grid.classList.add("is-hovering");
       tiles.forEach((t) => t.classList.add("is-active"));
-      playVideos(tiles); // відео всього проєкту оживають
+      pauseVideos(tiles); // ховер на проєкт — його відео завмирають
 
       const g = grid.getBoundingClientRect();
       const rows = new Map();
@@ -227,6 +219,16 @@
     window.addEventListener("resize", () => { if (current) drawSelection(current); });
   }
 
+  /* кнопка сайту: посилання → «Live website», інший текст → неклікабельна плашка */
+  function liveButton(live) {
+    if (!live) return "";
+    if (/^https?:\/\//.test(live)) {
+      const label = /instagram\.com/.test(live) ? "Instagram" : "Live website";
+      return `<a class="btn" href="${live}" target="_blank" rel="noopener">${label}</a>`;
+    }
+    return `<span class="btn is-off">${live}</span>`;
+  }
+
   /* ---------- СТОРІНКА ПРОЄКТУ ---------- */
   function project() {
     const slug = new URLSearchParams(location.search).get("p");
@@ -241,7 +243,7 @@
       ${p.services ? `<dl><dt>Services</dt><dd>${p.services}</dd></dl>` : ""}
       ${p.where ? `<dl><dt>Where</dt><dd>${p.where}</dd></dl>` : ""}
       ${p.description ? `<p class="desc">${p.description}</p>` : ""}
-      ${p.live ? `<a class="btn" href="${p.live}" target="_blank" rel="noopener">${/instagram\.com/.test(p.live) ? "Instagram" : "Live website"}</a>` : ""}`;
+      ${liveButton(p.live)}`;
 
     const gallery = document.querySelector(".gallery");
     // кожна картинка в обгортці: анімацію запускає обгортка, а маска — на самій картинці
@@ -251,7 +253,7 @@
       wrap.append(media(`assets/projects/${p.slug}/${file}`, h, `${p.title} — ${n + 1}`, true));
       gallery.append(wrap);
     });
-    revealOnScroll([...gallery.children]);
+
 
     const prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
     const next = PROJECTS[(i + 1) % PROJECTS.length];
