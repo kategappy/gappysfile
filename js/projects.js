@@ -18,6 +18,19 @@
 
 window.PROJECTS = [
   {
+    slug: "move-your-horse",
+    title: "move your horse",
+    services: "Naming, Brand, Organisation, Management",
+    where: "Personal project",
+    live: "https://www.instagram.com/move.your.horse/",
+    description: "My own initiative: a chess club with vinyl music and drinks, every Wednesday. A passion project I came up with, branded, organised and hosted myself.",
+    items: [
+      { file: "01.webp", h: 136 },
+      { file: "02.mp4", h: 112 },
+      { file: "03.webp", h: 350 },
+    ],
+  },
+  {
     slug: "payman",
     title: "payman",
     services: "Web Design, Brand",
@@ -30,19 +43,6 @@ window.PROJECTS = [
       { file: "03.webp", h: 190 },
       { file: "04.webp", h: 139 },
       { file: "05.webp", h: 141 },
-    ],
-  },
-  {
-    slug: "move-your-horse",
-    title: "move your horse",
-    services: "Naming, Brand, Organisation, Management",
-    where: "Personal project",
-    live: "https://www.instagram.com/move.your.horse/",
-    description: "My own initiative: a chess club with vinyl music and drinks, every Wednesday. A passion project I came up with, branded, organised and hosted myself.",
-    items: [
-      { file: "01.webp", h: 136 },
-      { file: "02.mp4", h: 112 },
-      { file: "03.webp", h: 350 },
     ],
   },
   {

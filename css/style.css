@@ -226,7 +226,7 @@ main { padding-top: 60px; }
   .header { grid-template-columns: repeat(4, auto); justify-content: space-between; }
   .header .brand, .header .nav-projects, .header .nav-about, .header .nav-contact { grid-column: auto; }
   .clock { display: none; }
-  .hero { padding-top: 40px; padding-bottom: 80px; }
+  .hero { padding-top: 80px; padding-bottom: 160px; }
   .hero .creature { grid-column: 1; }
   .hero .intro { grid-column: 2; font-size: 18px; }
   .works { row-gap: 60px; }
