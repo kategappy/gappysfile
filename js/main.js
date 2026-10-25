@@ -25,17 +25,22 @@
       <a class="brand" href="index.html">Gappy’s File</a>
       <a class="nav-projects" href="index.html" ${page !== "about" ? 'aria-current="page"' : ""}>Projects</a>
       <a class="nav-about" href="about.html" ${page === "about" ? 'aria-current="page"' : ""}>About</a>
-      <a class="nav-contact" href="${LINKS.contact}">Contact</a>
-      <div class="clock" aria-label="Local time in Barcelona">Barcelona, <span>--:--:--</span></div>`;
+      <a class="nav-contact" href="${LINKS.contact}">Contact</a>`;
     document.body.prepend(header);
     lines.after(header);
+
+    const clockBox = document.createElement("div");
+    clockBox.className = "clock";
+    clockBox.setAttribute("aria-label", "Local time in Barcelona");
+    clockBox.innerHTML = "Barcelona, <span>--:--:--</span>";
+    header.after(clockBox);
 
     const footer = document.createElement("footer");
     footer.className = "row footer";
     footer.innerHTML = `<p>© 1999-Now. Gappy’s File. All rights reserved</p>`;
     document.body.append(footer);
 
-    const clock = header.querySelector(".clock span");
+    const clock = clockBox.querySelector("span");
     const fmt = new Intl.DateTimeFormat("en-GB", {
       timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
     });
@@ -46,14 +51,15 @@
 
   /* картинка / відео або сірий плейсхолдер, якщо файла ще нема */
   const VIDEO = /\.(mp4|webm)$/i;
-  function media(src, h, alt) {
+  function media(src, h, alt, autoplay) {
     const box = document.createElement("div");
     box.className = "media";
     box.style.aspectRatio = `225 / ${h || 170}`;
     let el;
     if (VIDEO.test(src)) {
       el = document.createElement("video");
-      Object.assign(el, { autoplay: true, muted: true, loop: true, playsInline: true, preload: "metadata" });
+      // на головній відео стоїть на першому кадрі й оживає при ховері
+      Object.assign(el, { autoplay: !!autoplay, muted: true, loop: true, playsInline: true, preload: "auto" });
       el.setAttribute("muted", "");
       el.setAttribute("playsinline", "");
     } else {
@@ -66,10 +72,32 @@
       el.remove();
       box.insertAdjacentHTML("beforeend", `<span class="missing">${src.split("/").slice(-2).join("/")}</span>`);
     });
-    el.src = src;
+    el.src = VIDEO.test(src) && !autoplay ? src + "#t=0.001" : src; // #t — щоб показати перший кадр
     box.append(el);
     return box;
   }
+
+  /* ---------- поява плиток при скролі ----------
+     Коли плитка заходить в екран, вона отримує клас is-in (анімація в CSS).
+     Плитки, що з'являються разом, їдуть «хвилькою» зліва направо. */
+  function revealOnScroll(els) {
+    els.forEach((el) => el.classList.add("reveal"));
+    if (!("IntersectionObserver" in window)) { els.forEach((el) => el.classList.add("is-in")); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left)
+        .forEach((e, n) => {
+          e.target.style.setProperty("--delay", `${Math.min(n, 6) * 0.08}s`);
+          e.target.classList.add("is-in");
+          io.unobserve(e.target);
+        });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+    els.forEach((el) => io.observe(el));
+  }
+
+  const playVideos = (els) => els.forEach((el) => el.querySelectorAll("video").forEach((v) => v.play().catch(() => {})));
+  const pauseVideos = (els) => els.forEach((el) => el.querySelectorAll("video").forEach((v) => v.pause()));
 
   /* ---------- ГОЛОВНА ---------- */
   function home() {
@@ -95,6 +123,15 @@
       }
     });
 
+    revealOnScroll([...grid.querySelectorAll(".tile")]);
+
+    // на телефоні ховеру немає — там відео грають, коли видно на екрані
+    if (matchMedia("(hover: none)").matches && "IntersectionObserver" in window) {
+      const vio = new IntersectionObserver((entries) =>
+        entries.forEach((e) => (e.isIntersecting ? playVideos([e.target]) : pauseVideos([e.target]))), { threshold: 0.4 });
+      grid.querySelectorAll(".tile").forEach((t) => t.querySelector("video") && vio.observe(t));
+    }
+
     /* Ховер: наводиш на одну картинку — виділяється весь проєкт.
        Рамка малюється навколо кожного рядка, який займає проєкт. */
     const tag = document.querySelector(".cursor-tag");
@@ -104,6 +141,7 @@
     function clearSelection() {
       boxes.forEach((b) => b.remove());
       boxes = [];
+      pauseVideos([...grid.querySelectorAll(".tile.is-active")]); // відео завмирають
       grid.classList.remove("is-hovering");
       grid.querySelectorAll(".tile.is-active").forEach((t) => t.classList.remove("is-active"));
     }
@@ -114,6 +152,7 @@
       if (!tiles) return;
       grid.classList.add("is-hovering");
       tiles.forEach((t) => t.classList.add("is-active"));
+      playVideos(tiles); // відео всього проєкту оживають
 
       const g = grid.getBoundingClientRect();
       const rows = new Map();
@@ -194,8 +233,9 @@
 
     const gallery = document.querySelector(".gallery");
     p.items.forEach(({ file, h }, n) =>
-      gallery.append(media(`assets/projects/${p.slug}/${file}`, h, `${p.title} — ${n + 1}`))
+      gallery.append(media(`assets/projects/${p.slug}/${file}`, h, `${p.title} — ${n + 1}`, true))
     );
+    revealOnScroll([...gallery.children]);
 
     const prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
     const next = PROJECTS[(i + 1) % PROJECTS.length];
