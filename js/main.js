@@ -276,6 +276,67 @@
       const href = LINKS[a.dataset.link];
       if (href) a.href = href;
     });
+    eyes();
+  }
+
+  /* ---------- очі стежать за курсором ----------
+     Обличчя вставляється в сторінку як SVG, щоб можна було рухати зіниці.
+     Зіниця зсувається в бік курсора, але не далі за MAX (у одиницях малюнка). */
+  async function eyes() {
+    const img = document.querySelector("img.face");
+    if (!img) return;
+    let svg;
+    try {
+      const res = await fetch(img.getAttribute("src"));
+      const box = document.createElement("div");
+      box.innerHTML = await res.text();
+      svg = box.querySelector("svg");
+    } catch (e) { return; } // не вийшло — лишається звичайна картинка
+    if (!svg) return;
+    svg.setAttribute("class", img.className);
+    img.replaceWith(svg);
+
+    const pupils = [...svg.querySelectorAll(".pupil")].map((g) => ({
+      g, cx: +g.dataset.cx, cy: +g.dataset.cy, x: 0, y: 0, tx: 0, ty: 0,
+    }));
+    if (!pupils.length) return;
+    const MAX_X = 5, MAX_Y = 3;
+
+    function aim(clientX, clientY) {
+      const m = svg.getScreenCTM();
+      if (!m) return;
+      const scale = m.a;
+      pupils.forEach((p) => {
+        const ex = m.e + p.cx * scale, ey = m.f + p.cy * scale; // центр ока на екрані
+        const dx = clientX - ex, dy = clientY - ey;
+        const dist = Math.hypot(dx, dy) || 1;
+        const k = Math.min(1, dist / 300); // далеко — зіниця в краю ока
+        p.tx = (dx / dist) * MAX_X * k;
+        p.ty = (dy / dist) * MAX_Y * k;
+      });
+    }
+
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (matchMedia("(hover: hover)").matches) {
+      window.addEventListener("pointermove", (e) => aim(e.clientX, e.clientY));
+    } else if (!reduce) {
+      // на телефоні курсора нема — очі час від часу самі роззираються
+      const look = () => {
+        pupils.forEach((p) => { p.tx = (Math.random() * 2 - 1) * MAX_X; p.ty = (Math.random() * 2 - 1) * MAX_Y; });
+        const same = pupils[0]; pupils.forEach((p) => { p.tx = same.tx; p.ty = same.ty; });
+        setTimeout(look, 1200 + Math.random() * 1800);
+      };
+      look();
+    }
+
+    (function tick() {
+      pupils.forEach((p) => {
+        p.x += (p.tx - p.x) * (reduce ? 1 : 0.15);
+        p.y += (p.ty - p.y) * (reduce ? 1 : 0.15);
+        p.g.setAttribute("transform", `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)})`);
+      });
+      requestAnimationFrame(tick);
+    })();
   }
 
   chrome();

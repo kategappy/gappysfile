@@ -273,3 +273,5 @@ main { padding-top: 60px; }
 
 .studio-link { border-bottom: 1px solid currentColor; }
 .studio-link:hover { color: var(--accent); }
+
+.about-stage svg.face { height: auto; display: block; }

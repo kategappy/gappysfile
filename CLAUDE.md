@@ -8,6 +8,7 @@ Owner: Gappy (Kateryna Hapiienko). Talk to her in Ukrainian; she is a designer, 
 - `project.html?p=<slug>` — project page: info column (services, where, description, live link) + big media
 - `about.html` — face illustration (assets/about/face.svg) with leader notes: Services, Experience, Advice, Arena; "illustrations — coming soon"
 - `contact.html` — same face with Linkedin, Email, Instagram buttons (nav Contact goes here)
+- `assets/about/face.svg` — face path + two `<g class="pupil" data-cx data-cy>` groups (black disc + white catchlight); main.js inlines it and moves pupils toward the cursor (max 5×3 units); on touch devices the eyes look around on their own
 - "Where: O0" is rendered as a link to https://www.ozero.design/ (STUDIOS map in main.js)
 - `css/style.css` — tokens in `:root`: white bg, light grid lines, accent #0d99ff (Figma selection blue — the site imitates a Figma file), 6 cols, 10px gap, 120px row gap
 - `js/projects.js` — project list; the only file to edit when adding work
