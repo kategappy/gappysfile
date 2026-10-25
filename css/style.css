@@ -98,7 +98,8 @@ img { display: block; width: 100%; height: auto; }
 main { padding-top: 60px; }
 
 /* ---------- головна: hero ---------- */
-.hero { padding-top: 260px; padding-bottom: 260px; align-items: center; }
+/* 220 px від меню до блоку з грифоном (60 px уже дає відступ main) і 220 px під ним */
+.hero { padding-top: 205px; padding-bottom: 220px; align-items: center; }
 .hero .creature { grid-column: 3; position: relative; margin: 0; }
 .hero .creature img { display: block; }
 /* ховер на грифона: рамка виділення, як у Figma, і підпис під ним */
@@ -217,10 +218,13 @@ main { padding-top: 60px; }
 .project-nav a:hover { color: var(--accent); }
 
 /* ---------- About ---------- */
+/* сцена з обличчям масштабується так, щоб обличчя повністю влазило у висоту екрана,
+   і трохи піднята вгору (порожній верх композиції ховається під меню) */
 .about-stage {
+  --sw: min(100%, 1440px, calc((100svh - 80px) * 2));
   position: relative; z-index: 1;
-  margin: 0 auto;
-  width: 100%; max-width: 1440px;
+  margin: calc(var(--sw) * -0.07) auto 0;
+  width: var(--sw);
   aspect-ratio: 1440 / 900;
 }
 .about-stage > * { position: absolute; }
