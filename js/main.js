@@ -236,7 +236,7 @@
       ${p.services ? `<dl><dt>Services</dt><dd>${p.services}</dd></dl>` : ""}
       ${p.where ? `<dl><dt>Where</dt><dd>${p.where}</dd></dl>` : ""}
       ${p.description ? `<p class="desc">${p.description}</p>` : ""}
-      ${p.live ? `<a class="btn" href="${p.live}" target="_blank" rel="noopener">Live website</a>` : ""}`;
+      ${p.live ? `<a class="btn" href="${p.live}" target="_blank" rel="noopener">${/instagram\.com/.test(p.live) ? "Instagram" : "Live website"}</a>` : ""}`;
 
     const gallery = document.querySelector(".gallery");
     // кожна картинка в обгортці: анімацію запускає обгортка, а маска — на самій картинці

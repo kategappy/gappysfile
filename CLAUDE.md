@@ -17,7 +17,8 @@ Owner: Gappy (Kateryna Hapiienko). Talk to her in Ukrainian; she is a designer, 
 - `h` in projects.js = real height at 225px width (from the file’s aspect ratio).
 - Never commit originals (PNGs).
 - Mobile: 2 columns.
-- Her local working folder: ~/Documents/Sites/portfolio-upload (assets/projects/<slug>/).
+- Her local working folder: ~/Documents/Sites/portfolio-upload (assets/projects/<folder>/). She drops raw files there (any format, her numbering 1, 2…; may contain spaces in folder names like "free time"); Claude converts them and updates projects.js.
+- Project texts: `text.txt` in each local project folder with lines `Services:`, `Where:`, `Live:`, `Description:` → copy into projects.js. "Live: already dead" means no link.
 
 ## Figma
 File key `w9MVXkxrBpq5lMSbPg9pwC` (“My worksss”), page "new portfolio": home_new `4669:447`, projects_new `4669:1875`, about_new `4669:1815`.
