@@ -270,3 +270,6 @@ main { padding-top: 60px; }
     clip-path: none; transform: none; opacity: 1; transition: none;
   }
 }
+
+.studio-link { border-bottom: 1px solid currentColor; }
+.studio-link:hover { color: var(--accent); }

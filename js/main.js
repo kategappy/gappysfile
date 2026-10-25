@@ -23,9 +23,9 @@
     header.className = "row header";
     header.innerHTML = `
       <a class="brand" href="index.html">Gappy’s File</a>
-      <a class="nav-projects" href="index.html" ${page !== "about" ? 'aria-current="page"' : ""}>Projects</a>
+      <a class="nav-projects" href="index.html" ${page === "home" || page === "project" ? 'aria-current="page"' : ""}>Projects</a>
       <a class="nav-about" href="about.html" ${page === "about" ? 'aria-current="page"' : ""}>About</a>
-      <a class="nav-contact" href="${LINKS.contact}">Contact</a>`;
+      <a class="nav-contact" href="contact.html" ${page === "contact" ? 'aria-current="page"' : ""}>Contact</a>`;
     document.body.prepend(header);
     lines.after(header);
 
@@ -219,6 +219,13 @@
     window.addEventListener("resize", () => { if (current) drawSelection(current); });
   }
 
+  /* студія O0 — завжди посилання на її сайт */
+  const STUDIOS = { O0: "https://www.ozero.design/" };
+  function whereLink(where) {
+    const url = STUDIOS[where.trim()];
+    return url ? `<a class="studio-link" href="${url}" target="_blank" rel="noopener">${where}</a>` : where;
+  }
+
   /* кнопка сайту: посилання → «Live website», інший текст → неклікабельна плашка */
   function liveButton(live) {
     if (!live) return "";
@@ -241,7 +248,7 @@
     info.innerHTML = `
       <dl><dt>Project</dt><dd>${p.title}</dd></dl>
       ${p.services ? `<dl><dt>Services</dt><dd>${p.services}</dd></dl>` : ""}
-      ${p.where ? `<dl><dt>Where</dt><dd>${p.where}</dd></dl>` : ""}
+      ${p.where ? `<dl><dt>Where</dt><dd>${whereLink(p.where)}</dd></dl>` : ""}
       ${p.description ? `<p class="desc">${p.description}</p>` : ""}
       ${liveButton(p.live)}`;
 
@@ -274,5 +281,5 @@
   chrome();
   if (page === "home") home();
   if (page === "project") project();
-  if (page === "about") about();
+  if (page === "about" || page === "contact") about();
 })();
