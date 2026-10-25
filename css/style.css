@@ -249,21 +249,19 @@ main { padding-top: 60px; }
 }
 
 /* ---------- ефект появи при скролі ----------
-   Плитка «витягується» знизу: маска відкривається вгору,
-   а картинка всередині трохи зменшується з 1.15 до 1. */
-.reveal .media, .reveal.media {
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 1.1s cubic-bezier(.77, 0, .18, 1) var(--delay, 0s);
+   Картинка «випадає» зверху вниз: маска відкривається донизу,
+   а картинка всередині з'їжджає згори і зменшується з 1.15 до 1. */
+.reveal .media {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path .55s cubic-bezier(.77, 0, .18, 1) var(--delay, 0s);
 }
-.reveal .media > img, .reveal .media > video,
-.reveal.media > img, .reveal.media > video {
-  transform: scale(1.15) translateY(6%);
-  transition: transform 1.4s cubic-bezier(.22, 1, .36, 1) var(--delay, 0s);
+.reveal .media > img, .reveal .media > video {
+  transform: scale(1.15) translateY(-6%);
+  transition: transform .7s cubic-bezier(.22, 1, .36, 1) var(--delay, 0s);
 }
-.reveal .label { opacity: 0; transform: translateY(6px); transition: opacity .6s var(--delay, 0s), transform .6s var(--delay, 0s), color .2s; }
-.reveal.is-in .media, .reveal.is-in.media { clip-path: inset(0 0 0 0); }
-.reveal.is-in .media > img, .reveal.is-in .media > video,
-.reveal.is-in.media > img, .reveal.is-in.media > video { transform: none; }
+.reveal .label { opacity: 0; transform: translateY(-6px); transition: opacity .3s var(--delay, 0s), transform .3s var(--delay, 0s), color .2s; }
+.reveal.is-in .media { clip-path: inset(0 0 0 0); }
+.reveal.is-in .media > img, .reveal.is-in .media > video { transform: none; }
 .reveal.is-in .label { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {

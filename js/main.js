@@ -88,12 +88,19 @@
         .filter((e) => e.isIntersecting)
         .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left)
         .forEach((e, n) => {
-          e.target.style.setProperty("--delay", `${Math.min(n, 6) * 0.08}s`);
+          e.target.style.setProperty("--delay", `${Math.min(n, 6) * 0.04}s`);
           e.target.classList.add("is-in");
           io.unobserve(e.target);
         });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
     els.forEach((el) => io.observe(el));
+
+    // повернулась на сторінку кнопкою «назад» — браузер відновлює її з кешу,
+    // тому скидаємо стан і програємо анімацію знову
+    window.addEventListener("pageshow", (e) => {
+      if (!e.persisted) return;
+      els.forEach((el) => { el.classList.remove("is-in"); io.observe(el); });
+    });
   }
 
   const playVideos = (els) => els.forEach((el) => el.querySelectorAll("video").forEach((v) => v.play().catch(() => {})));
@@ -232,9 +239,13 @@
       ${p.live ? `<a class="btn" href="${p.live}" target="_blank" rel="noopener">Live website</a>` : ""}`;
 
     const gallery = document.querySelector(".gallery");
-    p.items.forEach(({ file, h }, n) =>
-      gallery.append(media(`assets/projects/${p.slug}/${file}`, h, `${p.title} — ${n + 1}`, true))
-    );
+    // кожна картинка в обгортці: анімацію запускає обгортка, а маска — на самій картинці
+    p.items.forEach(({ file, h }, n) => {
+      const wrap = document.createElement("div");
+      wrap.className = "shot";
+      wrap.append(media(`assets/projects/${p.slug}/${file}`, h, `${p.title} — ${n + 1}`, true));
+      gallery.append(wrap);
+    });
     revealOnScroll([...gallery.children]);
 
     const prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
