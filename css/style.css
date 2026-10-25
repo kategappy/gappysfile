@@ -213,7 +213,7 @@ main { padding-top: 60px; }
 .about-stage .face { left: 33.9%; top: 16.1%; width: 31.1%; }
 .about-stage svg.leaders { inset: 0; width: 100%; height: 100%; }
 .about-stage svg.leaders line { stroke: var(--ink); stroke-width: 1; }
-.about-stage .note dt { font-family: var(--sans); font-size: 11px; color: var(--muted); }
+.about-stage .note dt { font-family: var(--sans); font-size: 11px; color: var(--muted); margin-bottom: 4px; }
 .about-stage .note dd { font-weight: 300; font-family: var(--serif); font-size: 18px; line-height: 1.05; }
 .about-stage .btn { font-size: 14px; }
 .about-stage .btn:hover ~ * {}
@@ -254,7 +254,7 @@ main { padding-top: 60px; }
   .about-stage .face { width: 70% !important; margin: 0 auto 20px; flex-basis: 100%; max-width: 320px; }
   .about-stage .note { flex-basis: 100%; }
   .about-stage svg.leaders { display: none; }
-  .about-stage .note dd { font-size: 14px; }
+  .about-stage .note dd { font-size: 18px; }
   .about-stage .btn { font-size: 12px; padding: 5px 9px; }
   .illustrations .box { grid-column: 1 / -1; }
   .illustrations .soon { font-size: 44px; }
@@ -296,4 +296,9 @@ main { padding-top: 60px; }
   body[data-page="contact"] .about-stage { justify-content: center; }
   .about-stage .note-experience { padding-right: 25%; }
   .project { padding-top: 200px; }
+}
+
+/* телефон: шрифт із засічками трохи щільніший, щоб не здавався блідим */
+@media (max-width: 900px) {
+  .hero .intro, .about-stage .note dd { font-weight: 350; }
 }

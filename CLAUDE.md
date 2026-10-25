@@ -13,6 +13,7 @@ Owner: Gappy (Kateryna Hapiienko). Talk to her in Ukrainian; she is a designer, 
 - "Where: O0" is rendered as a link to https://www.ozero.design/ (STUDIOS map in main.js)
 - `css/style.css` — tokens in `:root`: white bg, light grid lines, accent #0d99ff (Figma selection blue — the site imitates a Figma file), 6 cols, 10px gap, 120px row gap
 - `js/projects.js` — project list; the only file to edit when adding work
+- CSS/JS are linked with `?v=N` in all HTML files — bump N on every CSS/JS change so browsers don’t show a stale cached version
 - `js/main.js` — header/clock/footer, grid from data, project hover (blue outline per row with corner handles, gaps inside the frame keep the hover), "See project" tag follows the cursor, project + about pages
 
 ## Rules for media (agreed with Gappy)
