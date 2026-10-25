@@ -127,7 +127,7 @@ main { padding-top: 60px; }
 .tile .label {
   position: absolute; bottom: 100%; left: 0;
   padding-bottom: 8px;
-  font-size: 11px; color: var(--muted);
+  font-size: 13px; color: var(--muted);
   white-space: nowrap;
 }
 .tile .media { background: var(--placeholder); position: relative; overflow: hidden; }
@@ -179,7 +179,7 @@ main { padding-top: 60px; }
   display: flex; flex-direction: column; gap: 18px;
   padding-right: 20px;
 }
-.project .info dt { font-size: 11px; color: var(--muted); }
+.project .info dt { font-size: 13px; color: var(--muted); }
 .project .info dd { font-size: 13px; }
 .project .info .desc { font-size: 13px; max-width: 420px; padding-top: 18px; }
 .btn {
@@ -286,3 +286,14 @@ main { padding-top: 60px; }
 .studio-link:hover { color: var(--accent); }
 
 .about-stage svg.face { height: auto; display: block; }
+
+/* Arena: на десктопі на About, на телефоні — на Contact */
+.mobile-only { display: none !important; }
+
+@media (max-width: 900px) {
+  .mobile-only { display: inline-block !important; }
+  .desktop-only { display: none !important; }
+  body[data-page="contact"] .about-stage { justify-content: center; }
+  .about-stage .note-experience { padding-right: 25%; }
+  .project { padding-top: 200px; }
+}

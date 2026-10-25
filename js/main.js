@@ -323,22 +323,32 @@
     }
 
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let last = 0, mx = 0, my = 0;
     if (matchMedia("(hover: hover)").matches) {
-      window.addEventListener("pointermove", (e) => aim(e.clientX, e.clientY));
+      // погляд оновлюється ривками (не частіше ніж раз на 140 мс), як справжні очі
+      window.addEventListener("pointermove", (e) => {
+        mx = e.clientX; my = e.clientY;
+        const now = performance.now();
+        if (now - last > 140) { last = now; aim(mx, my); }
+      });
+      setInterval(() => aim(mx, my), 160); // наздоганяємо, коли мишка зупинилась
     } else if (!reduce) {
-      // на телефоні курсора нема — очі час від часу самі роззираються
+      // на телефоні курсора нема — очі різко переводять погляд: ліво, право, вгору, вниз
+      const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1], [0, 0], [-1, -1], [1, -1], [-1, 1], [1, 1]];
+      let prev = 4;
       const look = () => {
-        pupils.forEach((p) => { p.tx = (Math.random() * 2 - 1) * MAX_X; p.ty = (Math.random() * 2 - 1) * MAX_Y; });
-        const same = pupils[0]; pupils.forEach((p) => { p.tx = same.tx; p.ty = same.ty; });
-        setTimeout(look, 1200 + Math.random() * 1800);
+        let i; do { i = Math.floor(Math.random() * dirs.length); } while (i === prev);
+        prev = i;
+        pupils.forEach((p) => { p.tx = dirs[i][0] * MAX_X; p.ty = dirs[i][1] * MAX_Y; });
+        setTimeout(look, 600 + Math.random() * 1200);
       };
       look();
     }
 
     (function tick() {
       pupils.forEach((p) => {
-        p.x += (p.tx - p.x) * (reduce ? 1 : 0.15);
-        p.y += (p.ty - p.y) * (reduce ? 1 : 0.15);
+        p.x += (p.tx - p.x) * (reduce ? 1 : 0.45); // 0.45 — швидкий, чіткий ривок
+        p.y += (p.ty - p.y) * (reduce ? 1 : 0.45);
         p.g.setAttribute("transform", `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)})`);
       });
       requestAnimationFrame(tick);
