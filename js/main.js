@@ -270,10 +270,13 @@
 
     const prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
     const next = PROJECTS[(i + 1) % PROJECTS.length];
-    document.querySelector(".project-nav").innerHTML = `
-      <a href="project.html?p=${prev.slug}">← ${prev.title}</a>
-      <a href="index.html">All projects</a>
-      <a href="project.html?p=${next.slug}">${next.title} →</a>`;
+    const navHTML = `
+      <a href="project.html?p=${prev.slug}" title="${prev.title}">← prev</a>
+      <a href="index.html">all projects</a>
+      <a href="project.html?p=${next.slug}" title="${next.title}">next →</a>`;
+    // на десктопі — внизу лівої колонки (фіксовано), на телефоні — під картинками
+    info.insertAdjacentHTML("beforeend", `<nav class="pnav">${navHTML}</nav>`);
+    document.querySelector(".project-nav").innerHTML = navHTML;
   }
 
   /* ---------- ABOUT ---------- */

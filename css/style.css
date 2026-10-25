@@ -175,10 +175,20 @@ main { padding-top: 60px; }
 .project { padding-top: 50px; padding-bottom: 160px; align-items: start; }
 .project .info {
   grid-column: 1 / span 2;
-  position: sticky; top: 90px;
+  /* ліва колонка стоїть на місці, поки картинки скроляться;
+     верх — врівень з першою картинкою, навігація притиснута донизу екрана */
+  position: sticky; top: 110px;
+  height: calc(100vh - 130px);
   display: flex; flex-direction: column; gap: 18px;
   padding-right: 20px;
 }
+.project .info .pnav {
+  margin-top: auto;
+  display: flex; justify-content: space-between;
+  font-size: 13px;
+}
+.project .info .pnav a:hover { color: var(--accent); }
+.project-nav { display: none; }
 .project .info dt { font-size: 13px; color: var(--muted); }
 .project .info dd { font-size: 13px; }
 .project .info .desc { font-size: 13px; max-width: 420px; padding-top: 18px; }
@@ -199,7 +209,7 @@ main { padding-top: 60px; }
   position: absolute; inset: 0; display: grid; place-items: center;
   font-size: 11px; color: #b5b5b5;
 }
-.project-nav { grid-column: 3 / span 4; display: flex; justify-content: space-between; padding-top: 40px; font-size: 12px; }
+.project-nav { grid-column: 3 / span 4; justify-content: space-between; padding-top: 40px; font-size: 13px; }
 .project-nav a:hover { color: var(--accent); }
 
 /* ---------- About ---------- */
@@ -244,7 +254,9 @@ main { padding-top: 60px; }
   .works .skip { display: none; }
   .tile { cursor: pointer; }
   .cursor-tag { display: none; }
-  .project .info { grid-column: 1 / -1; position: static; padding-bottom: 30px; }
+  .project .info { grid-column: 1 / -1; position: static; height: auto; padding-bottom: 30px; }
+  .project .info .pnav { display: none; }
+  .project-nav { display: flex; }
   .project .gallery, .project-nav { grid-column: 1 / -1; }
   .about-stage {
     aspect-ratio: auto; display: flex; flex-wrap: wrap; gap: 16px;
