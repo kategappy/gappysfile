@@ -41,9 +41,8 @@ window.PROJECTS = [
     description: "",
     items: [
       { file: "01.webp", h: 136 },
-      { file: "02.webp", h: 224 },
-      { file: "03.webp", h: 224 },
-      { file: "04.webp", h: 350 },
+      { file: "02.mp4", h: 112 },
+      { file: "03.webp", h: 350 },
     ],
   },
   {
@@ -97,8 +96,8 @@ window.PROJECTS = [
     description: "",
     items: [
       { file: "01.mp4", h: 128 },
-      { file: "02.mp4", h: 282 },
-      { file: "03.webp", h: 258 },
+      { file: "02.webp", h: 258 },
+      { file: "03.mp4", h: 133 },
       { file: "04.mp4", h: 243 },
       { file: "05.mp4", h: 281 },
     ],
