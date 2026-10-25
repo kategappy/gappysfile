@@ -5,8 +5,8 @@
 
   /* ---------- контакти (заповни, коли буде готово) ---------- */
   const LINKS = {
-    contact: "mailto:",   // наприклад "mailto:hello@gappy.com"
-    email: "mailto:",
+    contact: "mailto:gappy@ozero.design",
+    email: "mailto:gappy@ozero.design",
     linkedin: "#",
     arena: "#",
     instagram: "#",
@@ -44,22 +44,30 @@
     setInterval(tick, 1000);
   }
 
-  /* картинка або сірий плейсхолдер, якщо файла ще нема */
-  function media(src, ratio, alt) {
+  /* картинка / відео або сірий плейсхолдер, якщо файла ще нема */
+  const VIDEO = /\.(mp4|webm)$/i;
+  function media(src, h, alt) {
     const box = document.createElement("div");
     box.className = "media";
-    box.style.aspectRatio = `1 / ${ratio || 0.75}`;
-    const img = new Image();
-    img.alt = alt || "";
-    img.loading = "lazy";
-    img.decoding = "async";
-    img.onload = () => { box.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`; };
-    img.onerror = () => {
-      img.remove();
+    box.style.aspectRatio = `225 / ${h || 170}`;
+    let el;
+    if (VIDEO.test(src)) {
+      el = document.createElement("video");
+      Object.assign(el, { autoplay: true, muted: true, loop: true, playsInline: true, preload: "metadata" });
+      el.setAttribute("muted", "");
+      el.setAttribute("playsinline", "");
+    } else {
+      el = new Image();
+      el.alt = alt || "";
+      el.loading = "lazy";
+      el.decoding = "async";
+    }
+    el.addEventListener("error", () => {
+      el.remove();
       box.insertAdjacentHTML("beforeend", `<span class="missing">${src.split("/").slice(-2).join("/")}</span>`);
-    };
-    img.src = src;
-    box.append(img);
+    });
+    el.src = src;
+    box.append(el);
     return box;
   }
 
@@ -70,13 +78,13 @@
 
     PROJECTS.forEach((p) => {
       tilesBySlug[p.slug] = [];
-      p.images.forEach((file, i) => {
+      p.items.forEach(({ file, h }, i) => {
         const a = document.createElement("a");
         a.className = "tile";
         a.href = `project.html?p=${p.slug}`;
         a.dataset.slug = p.slug;
         if (i === 0) a.insertAdjacentHTML("beforeend", `<span class="label">${p.title}</span>`);
-        a.append(media(`assets/projects/${p.slug}/${file}`, p.ratios && p.ratios[i], `${p.title} — ${i + 1}`));
+        a.append(media(`assets/projects/${p.slug}/${file}`, h, `${p.title} — ${i + 1}`));
         grid.append(a);
         tilesBySlug[p.slug].push(a);
       });
@@ -139,20 +147,27 @@
       });
     }
 
-    grid.addEventListener("pointerover", (e) => {
+    // курсор у межах рамки (разом з 10px проміжками між картинками)?
+    function insideSelection(e) {
+      return boxes.some((b) => {
+        const r = b.getBoundingClientRect();
+        return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      });
+    }
+    function deactivate() { current = null; clearSelection(); tag.classList.remove("on"); }
+
+    grid.addEventListener("pointermove", (e) => {
+      if (e.pointerType !== "mouse") return;
       const tile = e.target.closest(".tile");
-      const slug = tile ? tile.dataset.slug : null;
-      if (slug === current) return;
-      current = slug;
-      if (slug) { drawSelection(slug); tag.classList.add("on"); }
+      if (tile) {
+        if (tile.dataset.slug !== current) { current = tile.dataset.slug; drawSelection(current); }
+        tag.classList.add("on");
+      } else if (current && !insideSelection(e)) deactivate();
     });
-    grid.addEventListener("pointerleave", () => {
-      current = null; clearSelection(); tag.classList.remove("on");
-    });
-    grid.addEventListener("pointerout", (e) => {
-      if (!e.relatedTarget || !e.relatedTarget.closest || !e.relatedTarget.closest(".tile")) {
-        current = null; clearSelection(); tag.classList.remove("on");
-      }
+    grid.addEventListener("pointerleave", deactivate);
+    // клік у проміжку між картинками теж відкриває проєкт
+    grid.addEventListener("click", (e) => {
+      if (!e.target.closest(".tile") && current) location.href = `project.html?p=${current}`;
     });
     window.addEventListener("pointermove", (e) => {
       tag.style.left = e.clientX + "px";
@@ -178,8 +193,8 @@
       ${p.live ? `<a class="btn" href="${p.live}" target="_blank" rel="noopener">Live website</a>` : ""}`;
 
     const gallery = document.querySelector(".gallery");
-    p.images.forEach((file, n) =>
-      gallery.append(media(`assets/projects/${p.slug}/${file}`, p.ratios && p.ratios[n], `${p.title} — ${n + 1}`))
+    p.items.forEach(({ file, h }, n) =>
+      gallery.append(media(`assets/projects/${p.slug}/${file}`, h, `${p.title} — ${n + 1}`))
     );
 
     const prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
