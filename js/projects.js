@@ -24,10 +24,10 @@ window.PROJECTS = [
     description: "",
     items: [
       { file: "01.mp4", h: 120 },
-      { file: "02.mp4", h: 127 },
-      { file: "03.mp4", h: 127 },
+      { file: "02.mp4", h: 119 },
+      { file: "03.mp4", h: 110 },
       { file: "04.webp", h: 177 },
-      { file: "05.mp4", h: 127 },
+      { file: "05.mp4", h: 115 },
     ],
   },
   {
@@ -68,7 +68,7 @@ window.PROJECTS = [
     description: "",
     items: [
       { file: "01.webp", h: 141 },
-      { file: "02.mp4", h: 242 },
+      { file: "02.mp4", h: 243 },
       { file: "03.webp", h: 190 },
       { file: "04.webp", h: 139 },
       { file: "05.webp", h: 141 },
@@ -82,11 +82,11 @@ window.PROJECTS = [
     live: "https://definedvc.com/",
     description: "",
     items: [
-      { file: "01.mp4", h: 127 },
-      { file: "02.mp4", h: 205 },
+      { file: "01.mp4", h: 128 },
+      { file: "02.mp4", h: 282 },
       { file: "03.webp", h: 258 },
       { file: "04.mp4", h: 243 },
-      { file: "05.mp4", h: 205 },
+      { file: "05.mp4", h: 281 },
     ],
   },
   {
@@ -98,9 +98,9 @@ window.PROJECTS = [
     description: "",
     items: [
       { file: "01.mp4", h: 129 },
-      { file: "02.mp4", h: 127 },
-      { file: "03.mp4", h: 127 },
-      { file: "04.mp4", h: 127 },
+      { file: "02.mp4", h: 125 },
+      { file: "03.mp4", h: 123 },
+      { file: "04.mp4", h: 125 },
       { file: "05.webp", h: 132 },
     ],
   },
@@ -112,7 +112,7 @@ window.PROJECTS = [
     live: "https://www.tomin.film/",
     description: "",
     items: [
-      { file: "01.mp4", h: 127 },
+      { file: "01.mp4", h: 128 },
       { file: "02.webp", h: 123 },
     ],
   },

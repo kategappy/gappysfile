@@ -68,6 +68,11 @@
       el.loading = "lazy";
       el.decoding = "async";
     }
+    // як тільки файл завантажився — плитка бере його справжні пропорції,
+    // тож картинка/відео показується повністю, без обрізання
+    const fit = (w, h) => { if (w && h) box.style.aspectRatio = `${w} / ${h}`; };
+    el.addEventListener("load", () => fit(el.naturalWidth, el.naturalHeight));
+    el.addEventListener("loadedmetadata", () => fit(el.videoWidth, el.videoHeight));
     el.addEventListener("error", () => {
       el.remove();
       box.insertAdjacentHTML("beforeend", `<span class="missing">${src.split("/").slice(-2).join("/")}</span>`);

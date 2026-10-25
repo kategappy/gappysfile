@@ -13,8 +13,8 @@ Owner: Gappy (Kateryna Hapiienko). Talk to her in Ukrainian; she is a designer, 
 
 ## Rules for media (agreed with Gappy)
 - Tile ORDER = Gappy’s own file numbering (`01.webp`, `02.mp4`…), NOT the Figma order.
-- Convert: images → `NN.webp` 800px wide, quality 82; videos → `NN.mp4` H.264, 800px wide, crf 26, no audio, +faststart.
-- `h` in projects.js = real height at 225px width (from the file’s aspect ratio).
+- Convert: images → `NN.webp` 800px wide, quality 82; videos → `NN.mp4` H.264, 800px wide, crf 26, no audio, +faststart. Her screen recordings often have non-square pixels (SAR ≠ 1:1): always normalise with `scale=trunc(iw*sar/2)*2:ih,setsar=1,scale=800:-2`.
+- `h` in projects.js = real height at 225px width (placeholder only — on load each tile takes the file’s natural proportions, nothing is cropped).
 - Never commit originals (PNGs).
 - Mobile: 2 columns.
 - Her local working folder: ~/Documents/Sites/portfolio-upload (assets/projects/<folder>/). She drops raw files there (any format, her numbering 1, 2…; may contain spaces in folder names like "free time"); Claude converts them and updates projects.js.
