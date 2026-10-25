@@ -5,11 +5,11 @@
 
   /* ---------- контакти (заповни, коли буде готово) ---------- */
   const LINKS = {
-    contact: "mailto:gappy@ozero.design",
-    email: "mailto:gappy@ozero.design",
-    linkedin: "#",
-    arena: "#",
-    instagram: "#",
+    contact: "mailto:katyagaa55@gmail.com",
+    email: "mailto:katyagaa55@gmail.com",
+    linkedin: "https://www.linkedin.com/in/kateryna-hapiienko-399292173/",
+    arena: "https://www.are.na/kate-gappy",
+    instagram: "https://www.instagram.com/katya__gappy/",
   };
 
   /* ---------- шапка, лінії сітки, футер ---------- */
